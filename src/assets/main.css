@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'America XIX';
+  src: url('./assets/fonts/AM_XIX.OTF') format('opentype');
+  font-weight: normal; /* Укажите соответствующее начертание */
+  font-style: normal;  /* Укажите обычный или курсив */
+  font-display: swap;  /* Обеспечивает видимость текста при загрузке:cite[1]:cite[5] */
+}
