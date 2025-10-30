@@ -28,17 +28,17 @@ const solveQuadratic = () => {
       return
     }
 
-    if (numA === 0) {
-      solution.value = {
-        type: 'a=0',
-        x: -c.value / b.value,
-      }
-      return
-    }
-
     const signedA = numA
     const signedB = signB.value === '+' ? numB : -numB
     const signedC = signC.value === '+' ? numC : -numC
+
+    if (numA === 0) {
+      solution.value = {
+        type: 'a=0',
+        x: -signedC / signedB,
+      }
+      return
+    }
 
     const discriminant = signedB * signedB - 4 * signedA * signedC
 
