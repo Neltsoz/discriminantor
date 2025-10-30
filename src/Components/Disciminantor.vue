@@ -14,7 +14,7 @@ const solveQuadratic = () => {
   solution.value = null
 
   try {
-    if (!a.value || !b.value || !c.value) {
+    if (a.value === "" || b.value === "" || c.value === "") {
       error.value = 'Все коэффициенты должны быть заполнены'
       return
     }
@@ -29,7 +29,10 @@ const solveQuadratic = () => {
     }
 
     if (numA === 0) {
-      error.value = 'Коэффициент a не может быть равен 0'
+      solution.value = {
+        type: 'a=0',
+        x: -c.value / b.value,
+      }
       return
     }
 
@@ -83,9 +86,9 @@ const clearForm = () => {
 }
 
 const equationString = computed(() => {
-  const aVal = a.value || 'a'
-  const bVal = b.value || 'b'
-  const cVal = c.value || 'c'
+  const aVal = a.value !== "" ? a.value : "a"
+  const bVal = b.value !== "" ? b.value : "b"
+  const cVal = c.value !== "" ? c.value : "c"
   
   return `${aVal}x² ${signB.value} ${bVal}x ${signC.value} ${cVal} = 0`
 })
@@ -157,7 +160,7 @@ const equationString = computed(() => {
       <div v-if="solution" class="solution">
         <h2>Решение:</h2>
         
-        <div class="solution-step">
+        <div v-if="solution.type !== 'a=0'" class="solution-step">
           <strong>Дискриминант:</strong> D = b² - 4ac = {{ solution.discriminant }}
         </div>
 
@@ -176,6 +179,11 @@ const equationString = computed(() => {
           <strong>Два комплексных корня:</strong><br>
           x₁ = {{ solution.real.toFixed(4) }} + {{ solution.imaginary.toFixed(4) }}i<br>
           x₂ = {{ solution.real.toFixed(4) }} - {{ solution.imaginary.toFixed(4) }}i
+        </div>
+
+        <div v-else-if="solution.type === 'a=0'" class="solution-step">
+          <strong>Один действительный корень:</strong><br>
+          x = {{ solution.x.toFixed(4) }}
         </div>
       </div>
     </div>
